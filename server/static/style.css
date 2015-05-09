@@ -1,0 +1,17 @@
+.book-content{
+	float: left;
+	padding:20px;
+}
+.cover-img{
+	float: left;
+	padding: 20px;
+}
+.book-title{
+	font-size: 32px;
+}
+.author{
+	font-size: 24px;
+}
+.cont2{
+	min-height: 700px;
+}

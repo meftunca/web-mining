@@ -1,0 +1,7 @@
+$def with(data)
+$var url:/
+$var title: Homepage
+<ul>
+	$for book in data:
+		<li><a href="/book/$book['id']">$book['name']</a></li>
+</ul>

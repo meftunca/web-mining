@@ -1,0 +1,27 @@
+$def with (content)
+<!DOCTYPE html>
+<html>
+<head>
+	<title>$content.get("title")</title>
+	<link type="text/css" rel="stylesheet" href="/../static/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="/../static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+	<nav class=" blue-grey" role="navigation">
+	    <div class="nav-wrapper container">
+	      <a href="#" class="brand-logo">Logo</a>
+	      <ul id="nav-mobile" class="right hide-on-med-and-down">
+	        <li><a href="/books">Book</a></li>
+	        <li><a href="/">Homepage</a></li>
+	        <li><a href="/music">Music</a></li>
+	      </ul>
+	    </div>
+	</nav>
+	<div class="container">
+		$:content
+	</div>
+	
+</body>
+</html>
