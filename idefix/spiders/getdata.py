@@ -19,11 +19,11 @@ class GetdataSpider(scrapy.Spider):
     def parse(self, response):
         bookUrls = response.css(".listeurun a::attr(href)").extract()
 
-        for url in bookUrls:
-        	item = items.IdefixItem()
-        	item['url'] = url
-
-        	yield Request('http://www.idefix.com' + url, self.parse_book_page, meta={'item': item})
+        for i, url in enumerate(bookUrls):
+            item = items.IdefixItem()
+            item['url'] = url
+            item['list_img'] = response.css('.listeimg::attr(src)').extract()[i]
+            yield Request('http://www.idefix.com' + url, self.parse_book_page, meta={'item': item})
 
 
     def parse_book_page(self, response):
@@ -32,18 +32,29 @@ class GetdataSpider(scrapy.Spider):
     	item['name'] = response.css(".tContArea .tContTitle::text").extract()[0]
     	item['author'] = response.css(".tContArea .tContAuth a::text").extract()[0]
     	item['price'] = response.css("#fiyattbl tr:nth-child(1) td:nth-child(2)::text").extract()[0].split('\r')[0]
+        item['content'] = response.css('.tTextPad::text').extract()[1]
+        score_response = response.css('.tBeText span::text').extract()
+        if(score_response):
+            item['score'] = score_response[0]
+        if(not score_response):
+            item['score'] = "0"
         item['reviews'] = []
         review_response = response.css('#elestiriyeni .tTitle2 a span::text').extract()
         if(review_response):
             review_count = review_response[0]
         else:
-            review_count = 0
+            review_count = "0"
         item['review_count'] = review_count
     	cover = response.css(".tImgBook::attr(src)").extract()[0]
         item['cover'] = cover
         #item['reviews'] = []
         UrID = cover.split('/')[-1]
-        lastPage = int(review_count)/5   #5 reviews for each page
+        if(int(review_count)%5==0):
+            lastPage = int(review_count)/5   #5 reviews for each page
+        if(int(review_count)%5!=0):
+            lastPage = int(review_count)/5 + 1
+        if(int(review_count)==0):
+            lastPage = int(review_count) + 1 #trick
 
         for page in range(1,lastPage+1):
                  

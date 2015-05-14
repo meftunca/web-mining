@@ -16,6 +16,9 @@ class IdefixItem(scrapy.Item):
 	cover = scrapy.Field()
 	review_count = scrapy.Field()
 	reviews = scrapy.Field()
+	list_img = scrapy.Field()
+	score = scrapy.Field()
+	content = scrapy.Field()
 
     
 
