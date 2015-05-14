@@ -14,7 +14,7 @@ urls = (
                
 render = web.template.render("templates", base="base")
 
-input_file  = file("../data.json", "r")
+input_file  = file("../books.json", "r")
 # data = json.loads(input_file.read().decode("utf-8-sig"))
 data = json.loads(input_file.read())
 
@@ -35,6 +35,9 @@ def get_book_by_id(bid):
       book['name'] = dicts['name']
       book['author'] = dicts['author']
       book['price'] = dicts['price']
+      book['score'] = dicts['score']
+      book['content'] = dicts['content']
+      book['list_img'] = dicts['list_img']
       book['img'] = cover
       return book
 
@@ -46,6 +49,7 @@ class index:
         book = dict()
         book['name'] = element['name']
         cover = element['cover']
+        book['list_img'] = element['list_img']
         book['id'] = cover.split('/')[-1]
         ids_and_names.append(book)
       return render.index(ids_and_names)
