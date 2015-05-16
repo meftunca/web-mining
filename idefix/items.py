@@ -9,6 +9,7 @@ import scrapy
 
 
 class IdefixItem(scrapy.Item):
+	
 	url = scrapy.Field()
 	name = scrapy.Field()
 	author = scrapy.Field()
@@ -20,5 +21,12 @@ class IdefixItem(scrapy.Item):
 	score = scrapy.Field()
 	content = scrapy.Field()
 
-    
+class IdefixMusicItem(scrapy.Item):
 
+	url = scrapy.Field()
+	name = scrapy.Field()
+	composer = scrapy.Field()
+	price = scrapy.Field()
+	cover = scrapy.Field()
+	list_img = scrapy.Field()
+	content = scrapy.Field()
