@@ -1,0 +1,19 @@
+$def with(data)
+$var url:/
+$var title: Musics
+<form class="col s12">
+	<div class="input-field">
+	    <input placeholder="Searc in musics" id="music-search" type="text">
+	    <br>
+	</div>
+</form>
+
+<ul id="musicResult">
+	$for music in data:
+		<li>
+			<a href="/music/$music['id']">
+				<img src="$music['list_img']">$music['name']
+			</a>
+			$music['composer']
+		</li>
+</ul>

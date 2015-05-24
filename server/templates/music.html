@@ -1,3 +1,15 @@
-$var url: /music
-$var title: Music
-Here is the music page...
+$def with(data, quote)
+
+$var title:$data['name']
+<div>
+<img class="cover-img" src=$data['img']>
+	<div class="book-content">
+	    <div class="book-title">Name: $data['name']</div>
+
+	    <div class="author">Author: $data['composer']</div>
+
+	    <div class="price">Price: $data['price']</div>
+
+	    <div class="book-summary">Özet:$data['content']</div>
+	</div>
+</div>
