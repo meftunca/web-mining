@@ -1,6 +1,7 @@
 $def with(data, quote)
 
-$var title:$data['name'] | $data['author']
+$var title:$data['name'] 
+
 <div>
 <img class="cover-img" src=$data['img']>
 	<div class="book-content">
@@ -13,6 +14,7 @@ $var title:$data['name'] | $data['author']
 	    <div class="book-summary">Özet:$data['content']</div>
 
 	    <div class="book-score">Score:$data['score']</div>
+
+	    <div class="book-score">Reviews:$data['reviews']</div>
 	</div>
 </div>
-     

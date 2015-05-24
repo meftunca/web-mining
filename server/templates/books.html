@@ -1,1 +1,31 @@
+$def with(data)
+$var url:/
 $var title: Books
+
+<div class="input-field">
+    <input placeholder="Search in books" id="book-search" type="text">         
+</div>
+
+
+
+<ul id="bookResult">
+	$for book in data:
+		<li>
+			<a href="/book/$book['id']">
+				<img src="$book['list_img']">
+			</a>
+			<div class="inner-book-contetn">
+				<a href="/book/$book['id']">$book['name']</a>
+				<br>
+				$book['author']
+			</div>
+		</li>
+</ul>
+<!--<table>
+	$for book in data:
+		<tr>
+			<td><a href="/book/$book['id']"><img src="$book['list_img']"></a></td>
+			<td><a href="/book/$book['id']">$book['name']</td>
+			<td>$book['author']</td>
+		</tr>
+</table>-->
