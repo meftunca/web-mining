@@ -32,7 +32,11 @@ class GetdataSpider(scrapy.Spider):
     	item['name'] = response.css(".tContArea .tContTitle::text").extract()[0]
     	item['author'] = response.css(".tContArea .tContAuth a::text").extract()[0]
     	item['price'] = response.css("#fiyattbl tr:nth-child(1) td:nth-child(2)::text").extract()[0].split('\r')[0]
-        item['content'] = response.css('.tTextPad::text').extract()[1]
+        content_div = response.css('.tTextPad').extract()[0]
+        content_div = content_div.encode("utf-8")
+        content = content_div.split('<div class="tHR1"></div>')[0]
+        content = content.replace('<div class="tTextPad">', "").replace("<br>", "")
+        item['content'] = content
         score_response = response.css('.tBeText span::text').extract()
         if(score_response):
             item['score'] = score_response[0]

@@ -13,16 +13,17 @@ urls = (
     '/book/(.*)', 'book',
     '/about', 'about',
     '/find_books', 'find_books',
-    '/find_musics', 'find_musics'    
+    '/find_musics', 'find_musics',
+    '/get_comments', 'get_comments' 
 )
                
 render = web.template.render("templates", base="base")
 
-book_file  = file("../books.json", "r")
+book_file  = file("../books_last.json", "r")
 # data = json.loads(input_file.read().decode("utf-8-sig"))
 book_data = json.loads(book_file.read())
 
-music_file  = file("../musics.json", "r")
+music_file  = file("../musics_last.json", "r")
 music_data = json.loads(music_file.read())
 
 
@@ -124,6 +125,20 @@ class find_musics():
         if music["name"].lower().find(query_name) != -1:
           found_musics.append(music)
       return json.dumps(found_musics)
+
+class get_comments():
+    def GET(self):
+      inp = web.input()
+      #counter = web.get('counter')
+      bid = inp.get("id")
+    
+      for book in book_data:
+        cover = book['cover']
+        book_id = cover.split("/")[-1]
+        if(int(bid) == int(book_id)):
+          comments = book['reviews']
+
+      return json.dumps(comments)
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

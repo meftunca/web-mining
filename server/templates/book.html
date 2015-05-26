@@ -10,11 +10,14 @@ $var title:$data['name']
 	    <div class="author">Author: $data['author']</div>
 
 	    <div class="price">Price: $data['price']</div>
-
-	    <div class="book-summary">Özet:$data['content']</div>
+	    $if data['content']:
+	    	<div class="book-summary">Özet:$data['content']</div>
 
 	    <div class="book-score">Score:$data['score']</div>
 
-	    <div class="book-score">Reviews:$data['reviews']</div>
+	    <!--<div class="book-score">Reviews:$data['reviews']</div>-->
+	    <input type="button" id="getReview" value="GetReview" />
 	</div>
+
+<div id="comments"></div>
 </div>

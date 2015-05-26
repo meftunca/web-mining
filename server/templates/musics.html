@@ -1,13 +1,10 @@
 $def with(data)
 $var url:/
 $var title: Musics
-<form class="col s12">
-	<div class="input-field">
-	    <input placeholder="Searc in musics" id="music-search" type="text">
-	    <br>
-	</div>
-</form>
-
+<div class="input-field">
+    <input placeholder="Searc in musics" id="music-search" type="text">
+    <br>
+</div>
 <ul id="musicResult">
 	$for music in data:
 		<li>

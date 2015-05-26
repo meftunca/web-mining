@@ -7,14 +7,15 @@ $("input").on("keydown",function search(e) {
 */
 $(document).ready(function (){
 
-	$("#book-search").on("keydown",function search(e) {
+	$("#book-search").on("keyup",function search(e) {
     	if(e.keyCode == 13) {
         	
         	var query_name = $("#book-search").val()
         	$.ajax({
 
         		url:"find_books",
-        		data:{ 'query_name': query_name },
+        		data:{ 'query_name': query_name ,
+                        'url': document.url},
         		dataType: "json",
         		beforeSend: function() {
         			console.log("before")
@@ -56,10 +57,11 @@ $(document).ready(function (){
     	}
 	});
 	
-	$("#music-search").on("keydown",function search(e) {
+	$("#music-search").on("keyup",function search(e) {
     	if(e.keyCode == 13) {
         	
         	var query_name = $("#music-search").val()
+            console.log(query_name)
         	$.ajax({
 
         		url:"find_musics",
@@ -100,8 +102,56 @@ $(document).ready(function (){
               		
             		}
         		}
-        	});
+        	}); 
         	
     	}
 	});
+
+    var counter = 0;
+    $("#getReview").click(function(){
+        //counter++;
+        $.ajax({
+
+            url:"get_comments",
+            data: {'id': document.URL.split("/")[4]},
+            dataType: "json",
+            beforeSend: function() {
+                console.log("before")
+            },
+            complete: function(data){
+                console.log("completed")
+                
+            },
+            success: function(data){
+                console.log(data)
+                /*var comments = $("#comments");
+                comments.empty();
+                if (data.length == 0) {
+                    comments.html("Sorry, no review found.");
+                }
+                else{
+                    
+                    data.forEach(function(review) {
+                        var li = $("<li>");
+                        var img = $("<img>");
+                        var link = $("<a>")
+                        var name = book.name;
+                        var cover = book.cover;
+                        var splited = cover.split("/");
+                        var id = splited[splited.length-1];
+                        link.attr("href", "/book/" + id);
+                        img.attr("src",  book.list_img);
+                        link.append(img);
+                        link.append(name);
+                        li.html(book.author);
+                        li.prepend(link);          
+                        bookResult.append(li);          
+                    })
+                
+                }*/
+            }
+
+        });
+    });
+
 });

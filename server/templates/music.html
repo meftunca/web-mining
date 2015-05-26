@@ -7,9 +7,10 @@ $var title:$data['name']
 	    <div class="book-title">Name: $data['name']</div>
 
 	    <div class="author">Author: $data['composer']</div>
-
+	    <h5>Albüm İçeriği</h5>
 	    <div class="price">Price: $data['price']</div>
-
-	    <div class="book-summary">Özet:$data['content']</div>
+	    $for music in data['content']:
+	    	<li>$music</li>
+	    
 	</div>
 </div>
