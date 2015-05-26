@@ -33,7 +33,13 @@ class GetmusicsSpider(scrapy.Spider):
     	item['name'] = response.css(".tContArea .tContTitle::text").extract()[0]
     	item['composer'] = response.css(".tContArea .tContAuth a::text").extract()[0]
     	item['price'] = response.css("#fiyattbl tr:nth-child(1) td:nth-child(2)::text").extract()[0].split('\r')[0].split(' ')[1]
-    	item['content'] = response.css('.tTextPad::text').extract()[1]
+    	content = response.css(".tTextPad .cliste li::text").extract()
+
+        # removing &nbsp from list elements
+        content_arr = []
+        for c in content:
+            content_arr.append(c.replace("&nbsp",""))
+        item['content'] = content_arr
 
     	cover = response.css(".tImgBook::attr(src)").extract()[0]
     	item['cover'] = cover
