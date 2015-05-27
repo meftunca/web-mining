@@ -5,12 +5,21 @@ $var title: Musics
     <input placeholder="Searc in musics" id="music-search" type="text">
     <br>
 </div>
-<ul id="musicResult">
+<br><br>
+<table id="musicTable">
+	<thead>
+		<tr>
+			<td></td>
+			<td>NAME</td>
+			<td>COMPOSER</td>
+		</tr>
+	</thead>
+	<tbody id="musicResult">
 	$for music in data:
-		<li>
-			<a href="/music/$music['id']">
-				<img src="$music['list_img']">$music['name']
-			</a>
-			$music['composer']
-		</li>
-</ul>
+		<tr>
+			<td><a href="/music/$music['id']"><img src="$music['list_img']"></a></td>
+			<td><a href="/music/$music['id']">$music['name']</a></td>
+			<td>$music['composer']</td>
+		</tr>
+	</tbody>
+</table>

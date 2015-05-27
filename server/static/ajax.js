@@ -29,25 +29,40 @@ $(document).ready(function (){
         			var bookResult = $("#bookResult");
           			bookResult.empty();
           			if (data.length == 0) {
-              			bookResult.html("Sorry, no book found.");
+                        $("#bookTable").empty();
+              			$("#bookTable").html("Sorry, no book found.");
             		}
             		else{
             			
               			data.forEach(function(book) {
-                			var li = $("<li>");
-                			var img = $("<img>");
-                			var link = $("<a>")
+                            var img = $("<img>");
                 			var name = book.name;
                 			var cover = book.cover;
                 			var splited = cover.split("/");
                 			var id = splited[splited.length-1];
-                			link.attr("href", "/book/" + id);
-                			img.attr("src",  book.list_img);
-                			link.append(img);
-                			link.append(name);
-                			li.html(book.author);
-                			li.prepend(link);          
-                			bookResult.append(li);          
+                            img.attr("src",  book.list_img);
+                            
+                            var tr = $("<tr>");
+                            for(i=0;i<3;i++){
+                                var td = $("<td>");
+                                var link = $("<a>")
+                                link.attr("href", "/book/" + id);
+                                if(i==0){
+                                    link.append(img);
+                                    td.append(link)
+                                }
+                                if(i==1){
+                                    link.html(name)
+                                    td.append(link)
+                                }
+                                if(i==2){
+                                    td.html(book.author)
+                                }
+                                tr.append(td);
+                                
+                            }
+                			//tr.prepend(link);      
+                			bookResult.append(tr);          
               			})
               		
             		}
@@ -79,25 +94,40 @@ $(document).ready(function (){
         			var musicResult = $("#musicResult");
           			musicResult.empty();
           			if (data.length == 0) {
-              			musicResult.html("Sorry, no music found.");
+                        $("#musicTable").empty();
+              			$("#musicTable").html("Sorry, no music found.");
             		}
             		else{
             			
               			data.forEach(function(music) {
-                			var li = $("<li>");
-                			var img = $("<img>");
-                			var link = $("<a>")
-                			var name = music.name;
-                			var cover = music.cover;
-                			var splited = cover.split("/");
-                			var id = splited[splited.length-1];
-                			link.attr("href", "/music/" + id);
-                			img.attr("src",  music.list_img);
-                			link.append(img);
-                			link.append(name);
-                			li.html(music.composer);
-                			li.prepend(link);          
-                			musicResult.append(li);          
+                            var img = $("<img>");
+                            var name = music.name;
+                            var cover = music.cover;
+                            var splited = cover.split("/");
+                            var id = splited[splited.length-1];
+                            img.attr("src",  music.list_img);
+                            
+                            var tr = $("<tr>");
+                            for(i=0;i<3;i++){
+                                var td = $("<td>");
+                                var link = $("<a>")
+                                link.attr("href", "/music/" + id);
+                                if(i==0){
+                                    link.append(img);
+                                    td.append(link)
+                                }
+                                if(i==1){
+                                    link.html(name)
+                                    td.append(link)
+                                }
+                                if(i==2){
+                                    td.html(music.composer)
+                                }
+                                tr.append(td);
+                                
+                            }
+                            //tr.prepend(link);      
+                            musicResult.append(tr);           
               			})
               		
             		}
@@ -110,15 +140,16 @@ $(document).ready(function (){
     var counter = 0;
     $("#getReview").click(function(){
         //counter++;
+        var id = document.URL.split("/")[4]
         $.ajax({
 
             url:"get_comments",
-            data: {'id': document.URL.split("/")[4]},
+            data: {'id': id },
             dataType: "json",
             beforeSend: function() {
                 console.log("before")
             },
-            complete: function(data){
+            complete: function(){
                 console.log("completed")
                 
             },

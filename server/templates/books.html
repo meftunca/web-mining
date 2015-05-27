@@ -8,7 +8,7 @@ $var title: Books
 
 
 
-<ul id="bookResult">
+<!--<ul id="bookResult">
 	$for book in data:
 		<li>
 			<a href="/book/$book['id']">
@@ -20,12 +20,22 @@ $var title: Books
 				$book['author']
 			</div>
 		</li>
-</ul>
-<!--<table>
+</ul>-->
+<br><br>
+<table id="bookTable">
+	<thead>
+		<tr>
+			<td></td>
+			<td>NAME</td>
+			<td>AUTHOR</td>
+		</tr>
+	</thead>
+	<tbody  id="bookResult">
 	$for book in data:
 		<tr>
 			<td><a href="/book/$book['id']"><img src="$book['list_img']"></a></td>
-			<td><a href="/book/$book['id']">$book['name']</td>
+			<td><a href="/book/$book['id']">$book['name']</a></td>
 			<td>$book['author']</td>
 		</tr>
-</table>-->
+	</tbody>
+</table>
