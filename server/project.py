@@ -100,8 +100,8 @@ class book:
     def GET(self, book_id):
       
       book = get_book_by_id(book_id)
-      from urllib import quote_plus
-      return render.book(book, quote_plus)
+      return render.book(book)
+
 class about():
     def GET(self):
         return render.about()
@@ -129,7 +129,7 @@ class find_musics():
 class get_comments():
     def GET(self):
       inp = web.input()
-      #counter = web.get('counter')
+      counter = int(inp.get('counter'))
       bid = inp.get("id")
     
       for book in book_data:
@@ -138,7 +138,7 @@ class get_comments():
         if(int(bid) == int(book_id)):
           comments = book['reviews']
 
-      return json.dumps(comments)
+      return json.dumps(comments[(counter-1)*5:counter*5])
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

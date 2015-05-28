@@ -1,10 +1,3 @@
-/*
-$("input").on("keydown",function search(e) {
-    if(e.keyCode == 13) {
-        alert($(this).val());
-    }
-});
-*/
 $(document).ready(function (){
 
 	$("#book-search").on("keyup",function search(e) {
@@ -70,7 +63,7 @@ $(document).ready(function (){
         	});
         	
     	}
-	});
+	});//end of book-search
 	
 	$("#music-search").on("keyup",function search(e) {
     	if(e.keyCode == 13) {
@@ -135,16 +128,20 @@ $(document).ready(function (){
         	}); 
         	
     	}
-	});
+	});//end of music-search
 
     var counter = 0;
     $("#getReview").click(function(){
-        //counter++;
+        
+        counter++;
+
+        $("#getReview").val("More Reviews")
         var id = document.URL.split("/")[4]
         $.ajax({
 
-            url:"get_comments",
-            data: {'id': id },
+            url:"/get_comments",
+            data: {'id': id,
+                    'counter': counter },
             dataType: "json",
             beforeSend: function() {
                 console.log("before")
@@ -155,34 +152,29 @@ $(document).ready(function (){
             },
             success: function(data){
                 console.log(data)
-                /*var comments = $("#comments");
+                var comments = $("#comments");
                 comments.empty();
                 if (data.length == 0) {
                     comments.html("Sorry, no review found.");
                 }
                 else{
-                    
+                    var head = $("<h4>");
+                    head.html("Reviews")
+                    head.append($("<hr>"))
+                    comments.append(head)
                     data.forEach(function(review) {
                         var li = $("<li>");
-                        var img = $("<img>");
-                        var link = $("<a>")
-                        var name = book.name;
-                        var cover = book.cover;
-                        var splited = cover.split("/");
-                        var id = splited[splited.length-1];
-                        link.attr("href", "/book/" + id);
-                        img.attr("src",  book.list_img);
-                        link.append(img);
-                        link.append(name);
-                        li.html(book.author);
-                        li.prepend(link);          
-                        bookResult.append(li);          
+                        li.html(review);
+         
+                        comments.append(li);          
                     })
                 
-                }*/
+                }
             }
 
         });
-    });
 
+        
+    });//end of getReview click function
+    
 });
