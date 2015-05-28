@@ -18,3 +18,15 @@
 .book-header{
 	font-size: 16px;
 }
+
+.wrapper{
+	box-shadow: 2px 2px 5px #888888;
+}
+.music-list{
+	clear: both;
+  	padding-left: 20px;
+}
+.music-content{
+	clear: both;
+	padding-left: 20px;
+}

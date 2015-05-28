@@ -1,16 +1,20 @@
 $def with(data, quote)
 
 $var title:$data['name']
-<div>
+<div class="all-content">
 <img class="cover-img" src=$data['img']>
-	<div class="book-content">
-	    <div class="book-title">Name: $data['name']</div>
+	<div class="music-content">
+	    <h4 class="music-title">$data['name']</h4>
 
-	    <div class="author">Author: $data['composer']</div>
-	    <h5>Albüm İçeriği</h5>
-	    <div class="price">Price: $data['price']</div>
-	    $for music in data['content']:
-	    	<li>$music</li>
+	    <div class="author">Composer: $data['composer']</div>
+	    <div class="price">Price: $data['price'] TL</div>
+	    <br>
+	</div>   
 	    
-	</div>
+	    <div class="music-list">
+	    <h5>Albüm İçeriği</h5><hr>
+	    	$for music in data['content']:
+	    		<li>$music</li>
+	    </div>
+	
 </div>

@@ -1,23 +1,25 @@
-$def with(data, quote)
+$def with(data)
 
 $var title:$data['name'] 
 
-<div>
+<div class="all-content">
 <img class="cover-img" src=$data['img']>
 	<div class="book-content">
-	    <div class="book-title">Name: $data['name']</div>
+	    <div class="book-title"> $data['name']</div>
 
 	    <div class="author">Author: $data['author']</div>
 
-	    <div class="price">Price: $data['price']</div>
+	    <div class="price">Price $data['price']</div>
+	    <div class="book-score">Score: $data['score']</div>
+	    
+	    <h4>Content</h4><hr>
 	    $if data['content']:
-	    	<div class="book-summary">Özet:$data['content']</div>
-
-	    <div class="book-score">Score:$data['score']</div>
-
-	    <!--<div class="book-score">Reviews:$data['reviews']</div>-->
-	    <input type="button" id="getReview" value="GetReview" />
+	    	<div class="book-summary">$data['content']</div>
+	    <br><br>
+	    <input type="button" id="getReview" value="See Reviews" />
+	    <br>
+	    <div id="comments"></div>
 	</div>
 
-<div id="comments"></div>
+
 </div>
