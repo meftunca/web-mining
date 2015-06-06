@@ -32,6 +32,7 @@ class GetdataSpider(scrapy.Spider):
     	item['name'] = response.css(".tContArea .tContTitle::text").extract()[0]
     	item['author'] = response.css(".tContArea .tContAuth a::text").extract()[0]
     	item['price'] = response.css("#fiyattbl tr:nth-child(1) td:nth-child(2)::text").extract()[0].split('\r')[0]
+        item['gender'] = response.css('.tContPubl a:last-child::text').extract()[0]
         content_div = response.css('.tTextPad').extract()[0]
         content_div = content_div.encode("utf-8")
         content = content_div.split('<div class="tHR1"></div>')[0]
@@ -61,7 +62,7 @@ class GetdataSpider(scrapy.Spider):
             lastPage = int(review_count) + 1 #trick
 
         for page in range(1,lastPage+1):
-                 
+            #post data to folowwing url  
             yield FormRequest("http://www.idefix.com/nssi/elestiri_sayfalama_inc.asp?sayfa=%d" % page,
                             formdata={'did': '1', 'UrID':UrID},
                             callback=self.parse_review, 

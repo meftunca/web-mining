@@ -20,6 +20,7 @@ class IdefixItem(scrapy.Item):
 	list_img = scrapy.Field()
 	score = scrapy.Field()
 	content = scrapy.Field()
+	gender = scrapy.Field()
 
 class IdefixMusicItem(scrapy.Item):
 
