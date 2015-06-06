@@ -14,7 +14,11 @@ urls = (
     '/about', 'about',
     '/find_books', 'find_books',
     '/find_musics', 'find_musics',
-    '/get_comments', 'get_comments' 
+    '/get_comments', 'get_comments',
+    '/book_score_query','book_score_query',
+    '/genre_query','genre_query',
+    '/genre_score_query','genre_score_query',
+    '/chart','chart'
 )
                
 render = web.template.render("templates", base="base")
@@ -27,7 +31,7 @@ music_file  = file("../musics_last.json", "r")
 music_data = json.loads(music_file.read())
 
 
-#Utils
+#-------------Utils-----------------
 def get_music_by_id(mid):
   for m in music_data:
     cover = m['cover']
@@ -55,10 +59,19 @@ def get_book_by_id(bid):
       book['content'] = b['content']
       book['list_img'] = b['list_img']
       book['reviews'] = b['reviews']
+      book['gender'] = b['gender']
       book['img'] = cover
       return book
 
-
+def sort(alist):
+    for passnum in range(len(alist)-1,0,-1):
+        for i in range(passnum):
+            if alist[i]['score']<alist[i+1]['score']:
+                temp = alist[i]['score']
+                alist[i]['score'] = alist[i+1]['score']
+                alist[i+1]['score'] = temp
+    return alist
+#-----------------------------------------------
 class index:
     def GET(self):
       return render.index()
@@ -93,6 +106,7 @@ class books:
         book['list_img'] = element['list_img']
         book['id'] = cover.split('/')[-1]
         book['author'] = element['author']
+        book['gender'] = element['gender']
         ids_and_names.append(book)
       return render.books(ids_and_names)
 
@@ -139,6 +153,67 @@ class get_comments():
           comments = book['reviews']
 
       return json.dumps(comments[(counter-1)*5:counter*5])
+
+class book_score_query():
+    def GET(self):
+      result_list = []
+      for book in book_data:
+        result = dict()
+        result['score'] = float(book['score'])
+        result['name'] = book['name']
+        result_list.append(result)
+      sorted_result_list = sort(result_list)
+      return json.dumps(sorted_result_list[:10])
+class genre_query():
+    def GET(self):
+      roman,polisiye,inceleme,tarih,trkEdebiyat,dnyKlasikler,politika,dnyEdebiyat,deneme = 0,0,0,0,0,0,0,0,0
+      res = dict()
+      for book in book_data:
+        if book['gender'].lower().find('roman') != -1:
+          roman +=1
+        if book['gender'].lower().find('polisiye') != -1:
+          polisiye +=1
+        if (book['gender'].lower().find('politika') != -1 ):#or book['gender'].lower().find('siyaset')!=-1):
+          politika +=1
+        if book['gender'].lower().find('inceleme') != -1:
+          inceleme +=1
+        if book['gender'].lower().find('tarih') != -1:
+          tarih +=1
+        if book['gender'].lower().find('deneme') != -1:
+          deneme +=1
+        if (book['gender'].lower().find(u'türk edebiyatı') != -1):# or book['gender'].lower().find(u'türkçe edebiyat')!=-1):
+          trkEdebiyat +=1
+        if (book['gender'].lower().find(u'dünya klasikleri') != -1):# or book['gender'].lower().find(u'klasik dünya')!=-1):
+          dnyKlasikler +=1
+        if book['gender'].lower().find(u'dünya edebiyatı') != -1:
+          dnyEdebiyat +=1
+      res['roman'] = roman
+      res['polisiye'] = polisiye
+      res['politika'] = politika
+      res['inceleme'] = inceleme
+      res['tarih'] = tarih
+      res['deneme'] = deneme
+      res['trkEdebiyat'] = trkEdebiyat
+      res['dnyKlasikler'] = dnyKlasikler
+      res['dnyEdebiyat'] = dnyEdebiyat
+      return json.dumps(res)
+class genre_score_query():
+    def GET(self):
+      inp = web.input()
+      opt = inp.get('opt')
+      opt = opt.lower()
+      res_list = []
+      for book in book_data:
+        res = dict()
+        if(book['gender'].lower().find(opt) != -1):
+          res['name'] = book['name']
+          res['score'] = book['score']
+          res_list.append(res)
+      return json.dumps(sort(res_list))
+class chart():
+    def GET(self):
+      return render.chart()
+
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

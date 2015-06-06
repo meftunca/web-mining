@@ -30,3 +30,18 @@
 	clear: both;
 	padding-left: 20px;
 }
+#homepage-logo{
+	height: 64px;
+	width: 64px;
+}
+.chart{
+	margin-top: 40px;
+	box-shadow:2px 2px 5px #888888;
+}
+#selectGenre{
+	display: block;
+	max-width: 250px;
+}
+#outer-chart-div{
+	min-height: 400px;
+}
